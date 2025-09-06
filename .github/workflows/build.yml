@@ -1,0 +1,13 @@
+name: build-win-exe
+on: { workflow_dispatch: {}, push: { branches: [ main ] } }
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: '8.0.x' }
+      - run: dotnet restore .\src\AssistMVP.App\AssistMVP.App.csproj
+      - run: dotnet publish .\src\AssistMVP.App\AssistMVP.App.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:EnableWindowsTargeting=true -o .\dist
+      - uses: actions/upload-artifact@v4
+        with: { name: AssistMVP-win-x64, path: dist/** }
