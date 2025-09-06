@@ -1,0 +1,20 @@
+<Window x:Class="AssistMVP.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:AssistMVP.ViewModels"
+        Title="AssistMVP — AI Troubleshooter" Height="720" Width="1080"
+        WindowStartupLocation="CenterScreen">
+  <Window.DataContext><vm:MainViewModel/></Window.DataContext>
+  <DockPanel>
+    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Background="#111827" Padding="8">
+      <TextBlock Text="AssistMVP" Foreground="White" FontWeight="Bold" FontSize="16" Margin="0,0,12,0"/>
+      <Button Content="Troubleshooter" Command="{Binding ShowTroubleshooterCommand}"/>
+      <Button Content="Optimizer" Command="{Binding ShowOptimizerCommand}"/>
+      <Button Content="VPN" Command="{Binding ShowVpnCommand}"/>
+      <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+        <TextBlock Text="{Binding Status}" Foreground="LightGray" Margin="12,0,0,0"/>
+      </StackPanel>
+    </StackPanel>
+    <ContentControl Content="{Binding CurrentView}"/>
+  </DockPanel>
+</Window>

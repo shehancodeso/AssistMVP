@@ -1,0 +1,16 @@
+<UserControl x:Class="AssistMVP.Views.VPNView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:AssistMVP.ViewModels">
+  <UserControl.DataContext><vm:VPNViewModel/></UserControl.DataContext>
+  <StackPanel Margin="12">
+    <TextBlock FontWeight="Bold" Text="VPN (WireGuard integration points)"/>
+    <TextBlock TextWrapping="Wrap">Install WireGuard for Windows separately. Import a .conf and Start/Stop via the official client.</TextBlock>
+    <StackPanel Orientation="Horizontal">
+      <Button Content="Import Config..." Command="{Binding ImportCommand}"/>
+      <Button Content="Start" Command="{Binding StartCommand}"/>
+      <Button Content="Stop" Command="{Binding StopCommand}"/>
+    </StackPanel>
+    <TextBlock Text="{Binding Info}" Margin="4" Foreground="Gray"/>
+  </StackPanel>
+</UserControl>

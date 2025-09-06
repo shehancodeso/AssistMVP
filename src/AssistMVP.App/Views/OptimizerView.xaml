@@ -1,0 +1,43 @@
+<UserControl x:Class="AssistMVP.Views.OptimizerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:AssistMVP.ViewModels">
+  <UserControl.DataContext><vm:OptimizerViewModel/></UserControl.DataContext>
+  <Grid Margin="12">
+    <Grid.ColumnDefinitions><ColumnDefinition Width="2*"/><ColumnDefinition Width="3*"/></Grid.ColumnDefinitions>
+    <StackPanel>
+      <TextBlock FontWeight="Bold" Text="Windows Optimizer"/>
+      <Button Content="Clean Temp Files" Command="{Binding CleanTempCommand}"/>
+      <Button Content="Manage Startup Items" Command="{Binding RefreshStartupCommand}"/>
+      <Button Content="Boost Performance" Command="{Binding BoostCommand}"/>
+      <TextBlock Text="{Binding Info}" Margin="4" Foreground="Gray"/>
+      <ListBox ItemsSource="{Binding HeavyProcesses}" Height="220" Margin="0,8,0,0">
+        <ListBox.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <TextBlock Text="{Binding Name}" Width="180"/>
+              <TextBlock Text="{Binding MemoryMB, StringFormat={}{0:F0} MB}" Width="100"/>
+              <Button Content="Kill" Command="{Binding DataContext.KillProcessCommand, RelativeSource={RelativeSource AncestorType=ListBox}}" CommandParameter="{Binding Pid}"/>
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </StackPanel>
+    <Border Grid.Column="1" BorderBrush="#ddd" BorderThickness="1" Padding="8" Margin="8,0,0,0">
+      <StackPanel>
+        <TextBlock FontWeight="Bold" Text="Startup Items (HKCU\...\Run)"/>
+        <ItemsControl ItemsSource="{Binding StartupItems}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal">
+                <TextBlock Text="{Binding Name}" Width="220"/>
+                <TextBlock Text="{Binding Command}" Width="480" TextTrimming="CharacterEllipsis"/>
+                <Button Content="Remove" Command="{Binding DataContext.RemoveStartupCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding Name}"/>
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+      </StackPanel>
+    </Border>
+  </Grid>
+</UserControl>
